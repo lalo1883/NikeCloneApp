@@ -1,20 +1,29 @@
-import 'package:ecommerce/components/bottom_nav_bar.dart';
+import 'package:ecommerce/components/cart_item.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:ecommerce/Model/cart.dart';
+import 'package:ecommerce/Model/shoe.dart';
 
-class CartPage extends StatefulWidget {
+class CartPage extends StatelessWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey.shade300,
-      body: Center(child: Text("Cart Page")),
-
+    return Consumer<Cart>(
+      builder: (context, value, child) => Column(
+        children: [
+          Expanded( // Corregido
+            child: ListView.builder(
+              itemCount: value.getCart().length,
+              itemBuilder: (context, index) {
+                Shoe shoe = value.getCart()[index];
+                return CartItem(shoe: shoe);
+              },
+            ),
+          ),
+        ],
+      ),
     );
+
   }
 }
